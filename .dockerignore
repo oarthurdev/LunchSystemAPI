@@ -1,0 +1,13 @@
+bin/
+obj/
+**/*.deb
+*.deb
+*.md
+*.json
+*.txt
+*.log
+.vscode/
+.git/
+.gitignore
+Dockerfile
+
