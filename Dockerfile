@@ -16,7 +16,11 @@ RUN dotnet publish LunchSystem.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
+# Copia TUDO que foi publicado
 COPY --from=build /app/publish .
+
+# Copia explicitamente o appsettings.json
+COPY --from=build /src/appsettings.json /app/appsettings.json
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 EXPOSE 8080
