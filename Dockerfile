@@ -7,7 +7,7 @@ WORKDIR /src
 COPY . .                 
 RUN dotnet restore lunch-choice.sln
 
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish LunchSystem.csproj -c Release -o /app/publish
 
 # ============================
 # 2. Runtime Stage
