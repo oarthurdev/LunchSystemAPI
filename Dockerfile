@@ -4,15 +4,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY lunch-choice.sln ./
-COPY LunchSystem.csproj ./
+COPY . .                 
+RUN dotnet restore
 
-RUN dotnet restore lunch-choice.sln
-
-COPY . .
-
-# Publica com arquivo explicitado para evitar erros
-RUN dotnet publish LunchSystem.csproj -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
 # ============================
 # 2. Runtime Stage
