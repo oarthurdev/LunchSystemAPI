@@ -4,7 +4,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY . .                 
+COPY . .
+
 RUN dotnet restore lunch-choice.sln
 
 RUN dotnet publish LunchSystem.csproj -c Release -o /app/publish

@@ -14,9 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // 🔧 CONFIGURATION BUILDER: carrega appsettings + ENV VARS (Render)
 // ------------------------------------------------------------
 builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables(); // <- Render injeta ORIGIN aqui
+    .AddEnvironmentVariables();
 
 // ------------------------------------------------------------
 // 📦 DATABASE
