@@ -4,15 +4,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia apenas o csproj primeiro (cache otimizado)
-COPY *.sln ./
-COPY ./backend/*.csproj ./LunchSystem/
+# Copia somente a solução e csproj para usar cache do Docker
+COPY lunch-choice.sln ./
+COPY LunchSystem.csproj ./
+
+# Restaura dependências
 RUN dotnet restore
 
 # Copia o restante do código
 COPY . .
 
-# Build da aplicação
+# Publica a aplicação
 RUN dotnet publish -c Release -o /app/publish
 
 # ============================
@@ -21,14 +23,12 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
-# Copia o publish
+# Copia o publish da imagem anterior
 COPY --from=build /app/publish .
 
-# Porta padrão do ASP.NET
+# Render usa automaticamente a variável PORT
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 EXPOSE 8080
 
-# Render usa variável $PORT automaticamente
-ENV ASPNETCORE_URLS=http://0.0.0.0:8080
-
-# Comando de inicialização
+# Inicia a aplicação
 ENTRYPOINT ["dotnet", "LunchSystem.dll"]
