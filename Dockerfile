@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Copia explicitamente o appsettings.json
-COPY --from=build appsettings.json /app/appsettings.json
+COPY --from=build /src/appsettings.json /app/appsettings.json
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 EXPOSE 8080
